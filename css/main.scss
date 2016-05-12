@@ -16,7 +16,9 @@ $spacing-unit:     30px;
 
 $text-color:       #111;
 $background-color: #fdfdfd;
-$brand-color:      #2a7ae2;
+$brand-color:      #ccc;
+$link-color: #aaa;
+$hover-color: #d64b00;
 
 $grey-color:       #828282;
 $grey-color-light: lighten($grey-color, 40%);
@@ -28,7 +30,9 @@ $content-width:    800px;
 $on-palm:          600px;
 $on-laptop:        800px;
 
-
+footer { background-color: #333; }
+a:link, a:visited { color: #ccc; }
+//body { margin-bottom: 0px; padding-bottom: 0px; }
 
 // Use media queries like this:
 // @include media-query($on-palm) {

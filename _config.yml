@@ -8,6 +8,7 @@
 # Site settings
 title: easytospell.net
 email: rgm@linux.com
+author: Richard Marshall
 description: > # this means to ignore newlines until "baseurl:"
   digging about the linux kernel, bad puns, and various other computer science things.
 baseurl: "" # the subpath of your site, e.g. /blog
