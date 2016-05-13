@@ -47,7 +47,22 @@ a:link, a:visited { color: #ccc; }
     }
 }
 
+.page-navigation {
+  display: block;
+  width: auto;
+  overflow: hidden;
+}
 
+.page-navigation a {
+  display: block;
+  width: 50%;
+  float: left;
+  margin: 1em 0;
+}
+
+.page-navigation .next {
+  text-align: right;
+}
 
 // Import partials from `sass_dir` (defaults to `_sass`)
 @import
