@@ -5,7 +5,7 @@ date:   2010-06-04 05:44:33 -0700
 categories: kernel arch
 ---
 
-Architectural overview of NUMA
+### Architectural overview of NUMA
 
 No not the silly youtube video, Non-Uniform Memory Access (NUMA) is a design model used in many newer multi-cpu computer systems. To understand NUMA it is best to first understand how things were before the its advent. The prototypical multiprocessor computer layout is symmetric multiprocessing (SMP) which uses a uniform memory access (UMA) model. The UMA nature of SMP means that each cpu is connected to a single memory bus. This methodology works well for a relatively small number of CPUs but as the number grows the contention for a single bus grows and cpus start having to wait in line for memory access for unacceptable lengths of time.
 

@@ -5,13 +5,13 @@ date:   2011-01-18 05:44:33 -0700
 categories: linux libc
 ---
 
-Go fork yourself
+### Go fork yourself
 
 Several months ago a good friend of mine suggested that I write a post about process creation. Initially I planned on writing a single post on fork, clone, exec, and friends however after thinking about the scope of the topic I’ve decided to break the subject up into several posts. This is the first and will cover the libc magic of the fork function.
 
 For clarity i will be referring to library functions by name (ex fork) and system calls as sys_name (ie sys_fork). Several of the examples will be making use of the strace and ltrace utilities so if you’re not familiar with them, now would be a good time to read their man pages.
 
-Back to basics
+### Back to basics
 
 While I am assuming there is a certain level of existing knowledge of how unix style process creation works, a quick overview seems appropriate. This topic has been covered at length by many a author much more eloquent than I, and if you are new to these ideas I would suggest a more in depth review of the material else where.
 
@@ -25,7 +25,7 @@ You may be wondering if all processes come from a parent process fork‘ing wher
 
 That concludes a rather brief background on the fork/exec concept the details of many of the pieces described will be covered in this and subsequent posts in this series.
 
-Behind the libc curtain
+### Behind the libc curtain
 
 The description of the libc side of fork will use glibc as the reference implementation. That noted there is quite a lot of linux specific stuff to follow in this section since fork is so tightly wound with the linux threading code.
 
@@ -66,17 +66,17 @@ The handlers that are registered are stored in a single linked list which is wal
 {% highlight c %}
 struct fork_handler
 {
-struct fork_handler *next;
-void (*prepare_handler) (void);
-void (*parent_handler) (void);
-void (*child_handler) (void);
-void *dso_handle;
-unsigned int refcntr;
-int need_signal;
+    struct fork_handler *next;
+    void (*prepare_handler) (void);
+    void (*parent_handler) (void);
+    void (*child_handler) (void);
+    void *dso_handle;
+    unsigned int refcntr;
+    int need_signal;
 };
 {% endhighlight %}
 
-The fields that are most relevant to this topic are the *_handler fields. These are the call-back function pointers mentioned earlier. Their names are pretty self evident on when they are called. But for due diligence the prepare_handler is called in the parent in the preparation for a call to sys_clone. parent_handler is called after the fork in the parent process, and child_handler is called from the child also after the fork. refcntr is used to prevent the list from being removed after a call to fork has already started.
+The fields that are most relevant to this topic are the \*\_handler fields. These are the call-back function pointers mentioned earlier. Their names are pretty self evident on when they are called. But for due diligence the prepare_handler is called in the parent in the preparation for a call to sys_clone. parent_handler is called after the fork in the parent process, and child_handler is called from the child also after the fork. refcntr is used to prevent the list from being removed after a call to fork has already started.
 
 Once all of the prepare handlers have been dealt with the actual call to sys_clone happens. This is done via a macro ARCH_FORK which on linux ends up calling sys_clone. Once the “fork” has happened two different code paths are followed depending on if execution is in the parent or the child.
 
